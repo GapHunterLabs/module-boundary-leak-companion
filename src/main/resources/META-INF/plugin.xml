@@ -1,0 +1,42 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>dev.gaphunter.moduleboundaryleakcompanion</id>
+    <name>Module Boundary Leak Companion</name>
+    <vendor>Gap Hunter Labs</vendor>
+    <description><![CDATA[
+        <p>Warning on an <code>import</code> of an <code>internal</code>
+        package (project convention: a <code>.internal.</code> segment in
+        the package path) from a DIFFERENT Gradle/Maven module than the
+        one that declares it -- hidden architecture coupling that, in
+        large monorepos/microservices, precedes cascading-deployment
+        incidents: a module's "private" internals change and break an
+        undeclared consumer that should never have had access.</p>
+        <p>Resolves each import via real PSI reference resolution (not a
+        global index lookup) combined with real platform module
+        resolution -- the module graph IntelliJ already imported from
+        your real Gradle/Maven project, not a second hand-rolled parser
+        of build files. Confirmed gap: the bundled Package Checker
+        analyzes CVEs of declared dependencies, not internal module
+        architecture; no Marketplace plugin dedicated to this found.</p>
+        <p>Stated honestly: v0.1 is Java only (Kotlin's import PSI is a
+        separate hierarchy, out of scope for this version) and works
+        against a single multi-module Gradle OR Maven project (not both
+        mixed in the same analysis); the "internal" convention must be a
+        literal <code>.internal.</code> package segment -- never inferred
+        from a javadoc/comment.</p>
+        <p>Free. No license nags, no telemetry, no network calls.</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <localInspection language="JAVA"
+            groupName="Module Boundary Leak Companion"
+            displayName="Import crosses a module boundary into an internal package"
+            enabledByDefault="true"
+            level="WARNING"
+            implementationClass="dev.gaphunter.moduleboundaryleakcompanion.inspection.ModuleBoundaryLeakInspection"/>
+        <notificationGroup id="Module Boundary Leak Companion" displayType="BALLOON"/>
+    </extensions>
+</idea-plugin>
