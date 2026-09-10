@@ -6,6 +6,12 @@ module than the one that declares it -- hidden architecture coupling
 that, in large monorepos/microservices, precedes cascading-deployment
 incidents.
 
+## Screenshots
+
+![Screenshot 1](docs/screenshots/Screenshot_1.png)
+
+![Screenshot 2](docs/screenshots/Screenshot_2.png)
+
 ## Why it exists
 
 A module's "private" internals changing and breaking an undeclared
