@@ -1,0 +1,9 @@
+<html>
+<body>
+Reports an import of an internal package (a <code>.internal.</code> segment in the package name) from a different
+Gradle or Maven module than the one that declares it.
+<!-- tooltip end -->
+<p>Internal packages can change at any time; a consumer in another module that should never have had access breaks
+when they do. Imports are resolved with the module graph the IDE imported from the build.</p>
+</body>
+</html>
